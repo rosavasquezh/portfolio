@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio · Data Analyst & NetSuite Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0e0e0c; --ink-2:#3a3a36; --ink-3:#6e6e68;
+  --paper:#f7f5f0; --paper-2:#eeece6; --paper-3:#e4e1d8;
+  --nav-bg:rgba(247,245,240,0.9);
+  --card-bg:#ffffff; --card-border:rgba(14,14,12,0.10);
+  --line:rgba(14,14,12,0.11);
+  --accent:#1a4f3a; --accent-2:#2d7a57; --accent-light:#e8f2ed;
+  --gold:#c8963e; --gold-light:#fdf3e3;
+  --blue:#1e3a6e; --blue-light:#e8eef8;
+  --coral:#c24b2a; --coral-light:#faeae5;
+  --arch-bg:#0e0e0c; --arch-border:rgba(255,255,255,0.09); --arch-sub:rgba(255,255,255,0.42);
+  --modal-bg:var(--paper); --r:6px;
+  --transition:.28s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"] {
+  --ink:#e4e2db; --ink-2:#a8a69e; --ink-3:#666560;
+  --paper:#131310; --paper-2:#1b1b18; --paper-3:#232320;
+  --nav-bg:rgba(19,19,16,0.92);
+  --card-bg:#1b1b18; --card-border:rgba(255,255,255,0.08);
+  --line:rgba(255,255,255,0.09);
+  --accent:#3dba78; --accent-2:#5ecf93; --accent-light:rgba(61,186,120,0.13);
+  --gold:#d4a554; --gold-light:rgba(212,165,84,0.13);
+  --blue:#5b8dd9; --blue-light:rgba(91,141,217,0.13);
+  --coral:#e0715a; --coral-light:rgba(224,113,90,0.13);
+  --arch-bg:#0a0a08; --modal-bg:#1b1b18;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;transition:background var(--transition),color var(--transition)}
+
+/* CTRL BAR */
+.ctrl-bar{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:40px;background:var(--accent);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.07em;color:rgba(255,255,255,0.72)}
+.ctrl-left{display:flex;align-items:center;gap:16px}
+.ctrl-version{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border-radius:100px;padding:3px 10px;color:#fff;font-weight:500;font-size:11px}
+.ctrl-right{display:flex;align-items:center;gap:6px}
+.toggle-pill{display:flex;align-items:center;background:rgba(255,255,255,0.13);border-radius:100px;padding:3px;gap:2px;border:none}
+.tog-opt{padding:4px 10px;border-radius:100px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.6);cursor:pointer;transition:all .18s;border:none;background:transparent;letter-spacing:0.06em}
+.tog-opt.active{background:#fff;color:var(--accent);font-weight:500}
+.ctrl-sep{width:1px;height:16px;background:rgba(255,255,255,0.2)}
+
+/* NAV */
+nav{position:fixed;top:40px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:15px 48px;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background var(--transition)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--accent)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:0.05em;color:var(--ink-2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:160px 48px 80px;gap:64px}
+.hero-left{max-width:580px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent-2);letter-spacing:0.1em;background:var(--accent-light);padding:5px 14px;border-radius:100px;margin-bottom:26px}
+.hero-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent-2);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(38px,4.8vw,68px);line-height:1.08;color:var(--ink);margin-bottom:22px}
+h1 em{color:var(--accent);font-style:italic}
+.hero-desc{font-size:16px;line-height:1.8;color:var(--ink-2);margin-bottom:36px;max-width:500px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:13px 26px;border-radius:100px;text-decoration:none;transition:all .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent-2);transform:translateY(-1px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-family:'Syne',sans-serif;font-size:13px;font-weight:500;padding:13px 26px;border-radius:100px;text-decoration:none;transition:all .2s;border:1.5px solid var(--line);cursor:pointer}
+.btn-secondary:hover{border-color:var(--ink-2);background:var(--paper-2)}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:22px;transition:transform .2s,box-shadow .2s;cursor:default}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
+.stat-card.ac{background:var(--accent)}
+.stat-card.ac .stat-num,.stat-card.ac .stat-label{color:#fff}
+.stat-card.ac .stat-sub{color:rgba(255,255,255,0.6)}
+.stat-icon{font-size:20px;margin-bottom:12px}
+.stat-num{font-family:'DM Serif Display',serif;font-size:36px;line-height:1;color:var(--ink);margin-bottom:5px}
+.stat-label{font-size:12px;font-weight:600;color:var(--ink)}
+.stat-sub{font-size:11px;color:var(--ink-3);margin-top:3px}
+
+/* SECTIONS */
+section{padding:96px 48px}
+.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;margin-bottom:56px;border-top:1px solid var(--line);padding-top:28px}
+.section-num{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--ink-3);margin-bottom:8px}
+h2{font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,42px);line-height:1.15;color:var(--ink)}
+h2 em{color:var(--accent);font-style:italic}
+.section-desc{max-width:460px;font-size:14px;line-height:1.75;color:var(--ink-2);text-align:right}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.about-text{font-size:15px;line-height:1.85;color:var(--ink-2)}
+.about-text p{margin-bottom:14px}
+.about-text strong{color:var(--ink);font-weight:600}
+.skills-grid{display:grid;gap:8px}
+.skills-label{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--ink-3);margin-bottom:4px;text-transform:uppercase}
+.skill-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--card-bg);font-size:13px;font-weight:500;cursor:default;transition:border-color .2s}
+.skill-row:hover{border-color:var(--accent-2)}
+.skill-bar{height:3px;background:var(--paper-3);border-radius:100px;width:110px;overflow:hidden}
+.skill-fill{height:100%;border-radius:100px;background:var(--accent-2)}
+
+/* NETSUITE */
+#netsuite{background:var(--paper-2)}
+.ns-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
+.ns-badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.ns-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:100px;font-size:11px;font-weight:600;background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-light)}
+[data-theme="dark"] .ns-badge{border-color:rgba(212,165,84,0.2)}
+.ns-text{font-size:15px;line-height:1.85;color:var(--ink-2)}
+.ns-text p{margin-bottom:13px}
+.ns-text strong{color:var(--ink)}
+.ns-modules{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ns-module{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:16px;transition:border-color .2s,transform .2s;cursor:default}
+.ns-module:hover{border-color:var(--gold);transform:translateY(-2px)}
+.ns-module-icon{font-size:20px;margin-bottom:10px}
+.ns-module-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.ns-module-desc{font-size:12px;color:var(--ink-3);line-height:1.6}
+
+/* ARCHITECTURE */
+#architecture{background:var(--arch-bg);transition:background var(--transition)}
+#architecture .section-num{color:rgba(255,255,255,0.32)}
+#architecture h2{color:#fff}
+#architecture h2 em{color:#5ecf93}
+#architecture .section-desc{color:rgba(255,255,255,0.48)}
+#architecture .section-head{border-top-color:rgba(255,255,255,0.08)}
+.arch-diagram{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--arch-border);border-radius:12px;overflow:hidden}
+.arch-layer{border-right:1px solid var(--arch-border);padding:28px 18px;transition:background .2s;cursor:default}
+.arch-layer:last-child{border-right:none}
+.arch-layer:hover{background:rgba(255,255,255,0.04)}
+.arch-layer-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.arch-layer-title{font-size:11px;font-weight:700;letter-spacing:0.08em;margin-bottom:10px}
+.arch-layer-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--arch-sub);line-height:1.75}
+.arch-layer-sub span{display:block;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.arch-layer-sub span:last-child{border-bottom:none}
+
+/* PROJECTS */
+#proyectos{background:var(--paper-2)}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.project-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;transition:transform .25s,box-shadow .25s;cursor:pointer;display:flex;flex-direction:column}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.1)}
+.project-banner{height:130px;display:flex;align-items:center;justify-content:center;font-size:44px}
+.project-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.project-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.06em;padding:3px 9px;border-radius:100px;border:1px solid;line-height:1.4}
+.tag-green{background:var(--accent-light);color:var(--accent);border-color:var(--accent-light)}
+.tag-gold{background:var(--gold-light);color:var(--gold);border-color:var(--gold-light)}
+.tag-blue{background:var(--blue-light);color:var(--blue);border-color:var(--blue-light)}
+.tag-coral{background:var(--coral-light);color:var(--coral);border-color:var(--coral-light)}
+[data-theme="dark"] .tag-green{border-color:rgba(61,186,120,0.2)}
+[data-theme="dark"] .tag-gold{border-color:rgba(212,165,84,0.2)}
+[data-theme="dark"] .tag-blue{border-color:rgba(91,141,217,0.2)}
+[data-theme="dark"] .tag-coral{border-color:rgba(224,113,90,0.2)}
+.project-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);margin-bottom:9px;line-height:1.3}
+.project-desc{font-size:13px;line-height:1.7;color:var(--ink-2);flex:1}
+.project-footer{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.project-impact{font-size:11px;font-weight:600;color:var(--accent-2)}
+.project-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-3);text-decoration:none;transition:color .2s}
+.project-link:hover{color:var(--accent)}
+.project-card.featured{grid-column:1 / -1;flex-direction:row}
+.project-card.featured .project-banner{width:280px;height:auto;flex-shrink:0;border-radius:0}
+.project-card.featured .project-body{padding:36px}
+
+/* STACK */
+.stack-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stack-cat{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stack-cat-head{padding:14px 18px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);background:var(--paper-2)}
+.stack-items{padding:10px;display:flex;flex-direction:column;gap:3px}
+.stack-item{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--r);font-size:12px;font-weight:500;transition:background .15s;cursor:default;color:var(--ink-2)}
+.stack-item:hover{background:var(--paper-2)}
+.stack-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* PROCESS */
+#proceso{background:var(--paper-2)}
+.process-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative}
+.process-steps::before{content:'';position:absolute;top:34px;left:5%;right:5%;height:1px;background:var(--line)}
+.process-step{text-align:center;padding:0 10px}
+.step-num{width:68px;height:68px;border-radius:50%;background:var(--card-bg);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:24px;color:var(--accent);margin:0 auto 18px;position:relative;z-index:1;transition:all .2s;cursor:default}
+.process-step:hover .step-num{background:var(--accent);color:#fff;border-color:var(--accent);transform:scale(1.08)}
+.step-title{font-size:12px;font-weight:700;margin-bottom:7px}
+.step-desc{font-size:11px;color:var(--ink-3);line-height:1.6}
+
+/* CONTACT */
+#contacto{background:var(--accent);color:#fff;text-align:center}
+#contacto .section-head{border-top-color:rgba(255,255,255,0.18);justify-content:center;flex-direction:column;align-items:center}
+#contacto .section-num{color:rgba(255,255,255,0.5)}
+#contacto h2{color:#fff}
+#contacto h2 em{color:#a8efc8}
+.contact-cta{font-family:'DM Serif Display',serif;font-size:clamp(20px,3vw,40px);color:#fff;margin:0 auto 12px;max-width:620px;line-height:1.25}
+.contact-sub{font-size:15px;color:rgba(255,255,255,0.65);max-width:460px;margin:0 auto 40px}
+.contact-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:40px}
+.contact-link{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,0.12);color:#fff;text-decoration:none;padding:12px 24px;border-radius:100px;border:1px solid rgba(255,255,255,0.22);font-size:13px;font-weight:600;transition:all .2s}
+.contact-link:hover{background:rgba(255,255,255,0.22);transform:translateY(-2px)}
+
+footer{padding:28px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-3)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.62);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--modal-bg);border-radius:16px;padding:44px;max-width:660px;width:92%;transform:translateY(18px);transition:transform .25s,background var(--transition);max-height:82vh;overflow-y:auto;border:1px solid var(--line)}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{float:right;background:var(--paper-2);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;color:var(--ink-2);display:flex;align-items:center;justify-content:center;transition:background .2s}
+.modal-close:hover{background:var(--paper-3)}
+.modal-tag{margin-bottom:14px}
+.modal h3{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:14px;color:var(--ink);line-height:1.2}
+.modal-body{font-size:14px;line-height:1.85;color:var(--ink-2)}
+.modal-body p{margin-bottom:13px}
+.modal-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.modal-metric{background:var(--paper-2);border-radius:var(--r);padding:14px;text-align:center}
+.modal-metric-num{font-family:'DM Serif Display',serif;font-size:26px;color:var(--accent);margin-bottom:3px}
+.modal-metric-label{font-size:11px;color:var(--ink-3)}
+
+@media(max-width:1024px){
+  #hero{grid-template-columns:1fr;min-height:auto;padding-top:110px}
+  .hero-stats{display:none}
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .project-card.featured{flex-direction:column;grid-column:auto}
+  .project-card.featured .project-banner{width:100%;height:130px}
+  .stack-categories{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:repeat(3,1fr);gap:28px}
+  .process-steps::before{display:none}
+  .arch-diagram{grid-template-columns:1fr}
+  .arch-layer{border-right:none;border-bottom:1px solid var(--arch-border)}
+  .about-grid,.ns-grid{grid-template-columns:1fr}
+  .section-head{flex-direction:column;gap:14px}
+  .section-desc{text-align:left}
+  .ctrl-bar{padding:0 20px}
+}
+@media(max-width:640px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  section{padding:56px 20px}
+  #hero{padding:90px 20px 56px}
+  .projects-grid{grid-template-columns:1fr}
+  .stack-categories{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  footer{flex-direction:column;gap:10px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- CTRL BAR -->
+<div class="ctrl-bar">
+  <div class="ctrl-left">
+    <span class="ctrl-version">v2.0</span>
+    <span data-i18n="ctrl_av">Disponible para proyectos</span>
+  </div>
+  <div class="ctrl-right">
+    <div class="toggle-pill">
+      <button class="tog-opt active" id="btn-light" onclick="setTheme('light')">☀ <span data-i18n="t_light">Claro</span></button>
+      <button class="tog-opt" id="btn-dark" onclick="setTheme('dark')">◐ <span data-i18n="t_dark">Oscuro</span></button>
+    </div>
+    <div class="ctrl-sep"></div>
+    <div class="toggle-pill">
+      <button class="tog-opt active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="tog-opt" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">// DATA ANALYST · NETSUITE ADMIN</div>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="n_about">Sobre mí</a></li>
+    <li><a href="#netsuite">NetSuite</a></li>
+    <li><a href="#architecture" data-i18n="n_arch">Arquitectura</a></li>
+    <li><a href="#proyectos" data-i18n="n_proj">Proyectos</a></li>
+    <li><a href="#stack" data-i18n="n_stack">Stack</a></li>
+    <li><a href="#contacto" data-i18n="n_con">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag" data-i18n="h_tag">Disponible para nuevos proyectos</div>
+    <h1 data-i18n-h="h_h1">Datos conectados,<br><em>decisiones</em> inteligentes</h1>
+    <p class="hero-desc" data-i18n="h_desc">Especialista en integración de sistemas, administración de NetSuite y arquitectura de datos centralizada. Conecto fuentes heterogéneas en un ecosistema analítico unificado.</p>
+    <div class="hero-ctas">
+      <a href="#proyectos" class="btn-primary" data-i18n="h_cta1">Ver proyectos →</a>
+      <a href="#contacto" class="btn-secondary" data-i18n="h_cta2">Contactar</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card ac"><div class="stat-icon">⬡</div><div class="stat-num">12+</div><div class="stat-label" data-i18n="s1l">Proyectos completados</div><div class="stat-sub" data-i18n="s1s">Integración de sistemas</div></div>
+    <div class="stat-card"><div class="stat-icon">◈</div><div class="stat-num">6+</div><div class="stat-label" data-i18n="s2l">Años con NetSuite</div><div class="stat-sub" data-i18n="s2s">Admin certificado</div></div>
+    <div class="stat-card"><div class="stat-icon">◎</div><div class="stat-num">98%</div><div class="stat-label" data-i18n="s3l">Uptime pipelines</div><div class="stat-sub">SLA</div></div>
+    <div class="stat-card"><div class="stat-icon">◑</div><div class="stat-num">3×</div><div class="stat-label" data-i18n="s4l">Velocidad de reporte</div><div class="stat-sub" data-i18n="s4s">vs procesos manuales</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="ab_num">01 — SOBRE MÍ</div><h2 data-i18n-h="ab_h2">Datos conectados,<br><em>valor real</em></h2></div>
+    <p class="section-desc" data-i18n="ab_desc">Me especializo en eliminar silos de información y construir infraestructuras analíticas que habilitan decisiones basadas en evidencia.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p data-i18n-h="ab_p1">Soy <strong>Analista de Datos y Administrador de NetSuite</strong> con enfoque en <strong>integración de sistemas y centralización de datos</strong>. Mi trabajo cubre todo el ciclo: desde la configuración del ERP hasta los dashboards ejecutivos.</p>
+      <p data-i18n-h="ab_p2">He trabajado con equipos de finanzas, operaciones, logística y ventas para identificar sus fuentes de verdad, conectarlas en plataformas centralizadas y automatizar los flujos que antes requerían trabajo manual. NetSuite suele ser el núcleo del ecosistema.</p>
+      <p data-i18n-h="ab_p3">Mi diferencial está en entender tanto el negocio como la infraestructura técnica, siendo el <strong>puente entre los equipos de datos y los stakeholders</strong>.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skills-label" data-i18n="sk_lbl">Competencias técnicas</div>
+      <div class="skill-row"><span data-i18n="sk1">NetSuite Admin & Customization</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk2">Ingeniería de datos & ETL</span><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk3">SQL avanzado & modelado</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk4">Integración de APIs REST</span><div class="skill-bar"><div class="skill-fill" style="width:87%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk5">Python · dbt · Airflow</span><div class="skill-bar"><div class="skill-fill" style="width:84%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk6">BI · Power BI · Looker</span><div class="skill-bar"><div class="skill-fill" style="width:89%"></div></div></div>
+      <div class="skill-row"><span data-i18n="sk7">Cloud · BigQuery · Snowflake</span><div class="skill-bar"><div class="skill-fill" style="width:79%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NETSUITE -->
+<section id="netsuite">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="ns_num">02 — NETSUITE</div><h2 data-i18n-h="ns_h2">NetSuite como <em>núcleo</em><br>del ecosistema</h2></div>
+    <p class="section-desc" data-i18n="ns_desc">Administro, personalizo e integro NetSuite con el ecosistema de datos para que el ERP sea la fuente de verdad central, no un silo.</p>
+  </div>
+  <div class="ns-grid">
+    <div>
+      <div class="ns-badge-row">
+        <span class="ns-badge">★ NetSuite Administrator</span>
+        <span class="ns-badge">SuiteScript 2.x</span>
+        <span class="ns-badge">SuiteFlow</span>
+        <span class="ns-badge">SuiteAnalytics</span>
+      </div>
+      <div class="ns-text">
+        <p data-i18n-h="ns_p1">Como <strong>Administrador de NetSuite</strong>, gestiono la configuración completa: roles y permisos, personalización de formularios y registros, automatización de workflows con SuiteFlow, y scripting con SuiteScript 2.x para extender capacidades nativas.</p>
+        <p data-i18n-h="ns_p2">Mi enfoque diferenciador es usar <strong>NetSuite como el núcleo del ecosistema de datos</strong>: diseño integraciones bidireccionales con otros sistemas (CRM, e-commerce, WMS, nómina) usando la API REST/SOAP y herramientas como Celigo y Boomi.</p>
+        <p data-i18n-h="ns_p3">Adicionalmente, extraigo datos de NetSuite hacia data warehouses (BigQuery, Snowflake) para análisis avanzado más allá de SuiteAnalytics, combinando datos del ERP con otras fuentes para una vista 360° del negocio.</p>
+      </div>
+    </div>
+    <div class="ns-modules">
+      <div class="ns-module"><div class="ns-module-icon">⚙️</div><div class="ns-module-title" data-i18n="nm1t">Administración</div><div class="ns-module-desc" data-i18n="nm1d">Roles, permisos, subsidiarias, períodos contables y gestión de usuarios.</div></div>
+      <div class="ns-module"><div class="ns-module-icon">🔧</div><div class="ns-module-title" data-i18n="nm2t">Customización</div><div class="ns-module-desc" data-i18n="nm2d">Campos personalizados, formularios, listas, registros y layouts de transacciones.</div></div>
+      <div class="ns-module"><div class="ns-module-icon">🤖</div><div class="ns-module-title" data-i18n="nm3t">SuiteScript 2.x</div><div class="ns-module-desc" data-i18n="nm3d">User event, Suitelet, RESTlet, scripts de mapa/reducción para procesos masivos.</div></div>
+      <div class="ns-module"><div class="ns-module-icon">🔁</div><div class="ns-module-title" data-i18n="nm4t">SuiteFlow</div><div class="ns-module-desc" data-i18n="nm4d">Automatización de aprobaciones, notificaciones y flujos entre módulos.</div></div>
+      <div class="ns-module"><div class="ns-module-icon">🔌</div><div class="ns-module-title" data-i18n="nm5t">Integraciones</div><div class="ns-module-desc" data-i18n="nm5d">REST/SOAP API, Celigo, Boomi. Conexión con Shopify, Salesforce, WMS y más.</div></div>
+      <div class="ns-module"><div class="ns-module-icon">📊</div><div class="ns-module-title" data-i18n="nm6t">SuiteAnalytics</div><div class="ns-module-desc" data-i18n="nm6d">Saved searches, reportes financieros, workbooks y dashboards de KPIs en tiempo real.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="ar_num">03 — ARQUITECTURA</div><h2 data-i18n-h="ar_h2">Ecosistema de datos<br><em>centralizado</em></h2></div>
+    <p class="section-desc" data-i18n="ar_desc">Desde las fuentes heterogéneas — con NetSuite como núcleo — hasta la inteligencia accionable.</p>
+  </div>
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <div class="arch-layer-icon" style="background:rgba(200,150,62,0.15)">📥</div>
+      <div class="arch-layer-title" style="color:#d4a554" data-i18n="al1t">FUENTES</div>
+      <div class="arch-layer-sub"><span>NetSuite ERP ★</span><span>Salesforce CRM</span><span>Shopify / WMS</span><span>APIs externas</span><span>Bases SQL</span><span>Spreadsheets</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-icon" style="background:rgba(94,207,147,0.15)">⚙️</div>
+      <div class="arch-layer-title" style="color:#5ecf93" data-i18n="al2t">INGESTA & ETL</div>
+      <div class="arch-layer-sub"><span>Celigo / Boomi</span><span>Apache Airflow</span><span>dbt Core</span><span>Fivetran / Airbyte</span><span>SuiteScript REST</span><span>CDC</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-icon" style="background:rgba(91,141,217,0.2)">🏛️</div>
+      <div class="arch-layer-title" style="color:#7aaee6" data-i18n="al3t">ALMACÉN CENTRAL</div>
+      <div class="arch-layer-sub"><span>BigQuery / Snowflake</span><span>Data Lake</span><span>Raw → Clean → Gold</span><span>Versionado</span><span>Particionado</span><span>Linaje</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-icon" style="background:rgba(224,113,90,0.15)">🔬</div>
+      <div class="arch-layer-title" style="color:#e88a6a" data-i18n="al4t">ANALÍTICA</div>
+      <div class="arch-layer-sub"><span>Modelos dimensionales</span><span>Métricas unificadas</span><span>ML features</span><span>SuiteAnalytics</span><span>Catálogo</span><span>Semántica</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-icon" style="background:rgba(61,186,120,0.15)">📊</div>
+      <div class="arch-layer-title" style="color:#5ecf93" data-i18n="al5t">CONSUMO</div>
+      <div class="arch-layer-sub"><span>Power BI / Looker</span><span>Dashboards RT</span><span>Alertas auto</span><span>APIs de datos</span><span>Reportes exec.</span><span>Self-service BI</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="proyectos">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="pj_num">04 — PROYECTOS</div><h2 data-i18n-h="pj_h2">Casos de <em>impacto</em><br>documentados</h2></div>
+    <p class="section-desc" data-i18n="pj_desc">Proyectos reales donde la integración y centralización generó valor medible.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card featured" onclick="openModal('p1')">
+      <div class="project-banner" style="background:linear-gradient(135deg,#1a4f3a,#2d7a57);font-size:52px">🏗️</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag tag-gold">NetSuite</span><span class="tag tag-green">BigQuery</span><span class="tag tag-blue">dbt</span><span class="tag tag-coral">Celigo</span></div>
+        <div class="project-title" data-i18n="p1t">NetSuite como hub central · Empresa de distribución</div>
+        <p class="project-desc" data-i18n="p1d">Integración bidireccional entre NetSuite y 8 sistemas satélite. NetSuite como fuente de verdad para finanzas, inventario y órdenes. Pipeline hacia BigQuery para análisis avanzado con dbt.</p>
+        <div class="project-footer"><span class="project-impact" data-i18n="p1i">↑ 8 sistemas · 40h/mes ahorradas · 98.7% uptime</span><span class="project-link" data-i18n="see_d">Ver detalle →</span></div>
+      </div>
+    </div>
+    <div class="project-card" onclick="openModal('p2')">
+      <div class="project-banner" style="background:linear-gradient(135deg,#1e3a6e,#2a5299)">💰</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag tag-gold">NetSuite</span><span class="tag tag-blue">Snowflake</span><span class="tag tag-green">Power BI</span></div>
+        <div class="project-title" data-i18n="p2t">Dashboard financiero multi-subsidiaria</div>
+        <p class="project-desc" data-i18n="p2d">Extracción de datos de NetSuite (6 subsidiarias) hacia Snowflake. Modelo dimensional para EBITDA, flujo de caja y márgenes consolidados en Power BI.</p>
+        <div class="project-footer"><span class="project-impact" data-i18n="p2i">↑ 6 subsidiarias · Tiempo real</span><span class="project-link" data-i18n="see_d">Ver detalle →</span></div>
+      </div>
+    </div>
+    <div class="project-card" onclick="openModal('p3')">
+      <div class="project-banner" style="background:linear-gradient(135deg,#7a2a1a,#c24b2a)">🛒</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag tag-coral">Shopify</span><span class="tag tag-gold">NetSuite</span><span class="tag tag-green">Celigo</span></div>
+        <div class="project-title" data-i18n="p3t">Integración Shopify ↔ NetSuite</div>
+        <p class="project-desc" data-i18n="p3d">Flujo automatizado de órdenes, inventario y fulfillment entre Shopify y NetSuite vía Celigo. Eliminación de doble captura y errores de stock.</p>
+        <div class="project-footer"><span class="project-impact" data-i18n="p3i">↑ 0 entrada manual · Errores −94%</span><span class="project-link" data-i18n="see_d">Ver detalle →</span></div>
+      </div>
+    </div>
+    <div class="project-card" onclick="openModal('p4')">
+      <div class="project-banner" style="background:linear-gradient(135deg,#3a2a6e,#6244b0)">🤖</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag tag-blue">SuiteScript</span><span class="tag tag-gold">SuiteFlow</span><span class="tag tag-green">Python</span></div>
+        <div class="project-title" data-i18n="p4t">Automatización de aprobaciones y ML</div>
+        <p class="project-desc" data-i18n="p4d">SuiteFlow para aprobaciones de PO en NetSuite. Pipeline de datos hacia feature store en BigQuery para modelo de predicción de demanda con reentrenamiento automático.</p>
+        <div class="project-footer"><span class="project-impact" data-i18n="p4i">↑ Precisión +31% · Aprobaciones automáticas</span><span class="project-link" data-i18n="see_d">Ver detalle →</span></div>
+      </div>
+    </div>
+    <div class="project-card" onclick="openModal('p5')">
+      <div class="project-banner" style="background:linear-gradient(135deg,#2a5a3a,#3d8a58)">📡</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag tag-green">Streaming</span><span class="tag tag-blue">Kafka</span><span class="tag tag-coral">Alertas</span></div>
+        <div class="project-title" data-i18n="p5t">Monitoreo operativo en tiempo real</div>
+        <p class="project-desc" data-i18n="p5d">Pipeline streaming desde sensores IoT con detección de anomalías estadísticas y alertas automáticas para reducir downtime industrial.</p>
+        <div class="project-footer"><span class="project-impact" data-i18n="p5i">↑ Downtime −67%</span><span class="project-link" data-i18n="see_d">Ver detalle →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="st_num">05 — TECNOLOGÍAS</div><h2 data-i18n-h="st_h2">Stack técnico <em>completo</em></h2></div>
+    <p class="section-desc" data-i18n="st_desc">Herramientas en producción, organizadas por capa del ecosistema de datos.</p>
+  </div>
+  <div class="stack-categories">
+    <div class="stack-cat"><div class="stack-cat-head" data-i18n="sc1">ERP & Integración</div><div class="stack-items">
+      <div class="stack-item"><div class="stack-dot" style="background:#009FDA"></div>NetSuite</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#E17F00"></div>Celigo</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#005BAC"></div>Dell Boomi</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#00AEEF"></div>Salesforce API</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#1C9CEA"></div>SAP BAPI/OData</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#96BF48"></div>Shopify API</div>
+    </div></div>
+    <div class="stack-cat"><div class="stack-cat-head" data-i18n="sc2">Almacenamiento & ETL</div><div class="stack-items">
+      <div class="stack-item"><div class="stack-dot" style="background:#669DF6"></div>BigQuery</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#29B5E8"></div>Snowflake</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#017CEE"></div>Apache Airflow</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#FF694A"></div>dbt Core</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#6c5ce7"></div>Fivetran</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#231F20"></div>Apache Kafka</div>
+    </div></div>
+    <div class="stack-cat"><div class="stack-cat-head" data-i18n="sc3">Análisis & BI</div><div class="stack-items">
+      <div class="stack-item"><div class="stack-dot" style="background:#F2C811"></div>Power BI</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#4285F4"></div>Looker Studio</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#009FDA"></div>SuiteAnalytics</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#3776AB"></div>Python / pandas</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#150458"></div>Jupyter</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#E97627"></div>Tableau</div>
+    </div></div>
+    <div class="stack-cat"><div class="stack-cat-head" data-i18n="sc4">Dev & Cloud</div><div class="stack-items">
+      <div class="stack-item"><div class="stack-dot" style="background:#f90"></div>AWS S3</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#4285F4"></div>Google Cloud</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#336791"></div>PostgreSQL</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#F05032"></div>Git / GitHub Actions</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#E10098"></div>GraphQL</div>
+      <div class="stack-item"><div class="stack-dot" style="background:#5C2D91"></div>Power Automate</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="section-head">
+    <div><div class="section-num" data-i18n="pr_num">06 — METODOLOGÍA</div><h2 data-i18n-h="pr_h2">Cómo trabajo un <em>proyecto</em></h2></div>
+    <p class="section-desc" data-i18n="pr_desc">Un proceso estructurado para ecosistemas de datos escalables, mantenibles y alineados con el negocio.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step"><div class="step-num">1</div><div class="step-title" data-i18n="st1t">Descubrimiento</div><div class="step-desc" data-i18n="st1d">Mapeamos fuentes, stakeholders y casos de uso prioritarios del negocio.</div></div>
+    <div class="process-step"><div class="step-num">2</div><div class="step-title" data-i18n="st2t">Auditoría de datos</div><div class="step-desc" data-i18n="st2d">Evaluamos calidad, completitud e identificamos gaps de gobierno.</div></div>
+    <div class="process-step"><div class="step-num">3</div><div class="step-title" data-i18n="st3t">Diseño de arquitectura</div><div class="step-desc" data-i18n="st3d">Definimos el modelo, capas del pipeline y estrategia de integración.</div></div>
+    <div class="process-step"><div class="step-num">4</div><div class="step-title" data-i18n="st4t">Desarrollo iterativo</div><div class="step-desc" data-i18n="st4d">Construimos pipelines, modelos dbt y conectores en sprints de 2 semanas.</div></div>
+    <div class="process-step"><div class="step-num">5</div><div class="step-title" data-i18n="st5t">Testing & QA</div><div class="step-desc" data-i18n="st5d">Validamos integridad, volúmenes, freshness y exactitud de métricas.</div></div>
+    <div class="process-step"><div class="step-num">6</div><div class="step-title" data-i18n="st6t">Entrega & habilitación</div><div class="step-desc" data-i18n="st6d">Documentamos, formamos a los equipos y establecemos monitoreo continuo.</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="section-head"><div><div class="section-num" data-i18n="co_num">07 — CONTACTO</div></div></div>
+  <div class="contact-cta" data-i18n-h="co_cta">¿Datos en silos? Construyamos tu <em>ecosistema unificado.</em></div>
+  <p class="contact-sub" data-i18n="co_sub">Cuéntame el desafío de integración que enfrentas y exploramos cómo abordarlo.</p>
+  <div class="contact-links">
+    <a href="mailto:tu@email.com" class="contact-link">✉ tu@email.com</a>
+    <a href="https://linkedin.com/in/tu-perfil" class="contact-link">in LinkedIn</a>
+    <a href="https://github.com/tu-usuario" class="contact-link">⌥ GitHub</a>
+    <a href="#" class="contact-link" data-i18n="co_cv">↓ Descargar CV</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 · Data Analyst · NetSuite Administrator</span>
+  <span data-i18n="ft_r">Portafolio · Google Sites</span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target.id==='modal')document.getElementById('modal').classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<script>
+const T={
+es:{
+  ctrl_av:'Disponible para proyectos',t_light:'Claro',t_dark:'Oscuro',
+  n_about:'Sobre mí',n_arch:'Arquitectura',n_proj:'Proyectos',n_stack:'Stack',n_con:'Contacto',
+  h_tag:'Disponible para nuevos proyectos',
+  h_h1:'Datos conectados,<br><em>decisiones</em> inteligentes',
+  h_desc:'Especialista en integración de sistemas, administración de NetSuite y arquitectura de datos centralizada. Conecto fuentes heterogéneas en un ecosistema analítico unificado.',
+  h_cta1:'Ver proyectos →',h_cta2:'Contactar',
+  s1l:'Proyectos completados',s1s:'Integración de sistemas',s2l:'Años con NetSuite',s2s:'Admin certificado',s3l:'Uptime pipelines',s4l:'Velocidad de reporte',s4s:'vs procesos manuales',
+  ab_num:'01 — SOBRE MÍ',ab_h2:'Datos conectados,<br><em>valor real</em>',
+  ab_desc:'Me especializo en eliminar silos de información y construir infraestructuras analíticas que habilitan decisiones basadas en evidencia.',
+  ab_p1:'Soy <strong>Analista de Datos y Administrador de NetSuite</strong> con enfoque en <strong>integración de sistemas y centralización de datos</strong>. Mi trabajo cubre todo el ciclo: desde la configuración del ERP hasta los dashboards ejecutivos.',
+  ab_p2:'He trabajado con equipos de finanzas, operaciones, logística y ventas para identificar sus fuentes de verdad, conectarlas en plataformas centralizadas y automatizar los flujos que antes requerían trabajo manual. NetSuite suele ser el núcleo del ecosistema.',
+  ab_p3:'Mi diferencial está en entender tanto el negocio como la infraestructura técnica, siendo el <strong>puente entre los equipos de datos y los stakeholders</strong>.',
+  sk_lbl:'Competencias técnicas',
+  sk1:'NetSuite Admin & Customization',sk2:'Ingeniería de datos & ETL',sk3:'SQL avanzado & modelado',sk4:'Integración de APIs REST',sk5:'Python · dbt · Airflow',sk6:'BI · Power BI · Looker',sk7:'Cloud · BigQuery · Snowflake',
+  ns_num:'02 — NETSUITE',ns_h2:'NetSuite como <em>núcleo</em><br>del ecosistema',
+  ns_desc:'Administro, personalizo e integro NetSuite con el ecosistema de datos para que el ERP sea la fuente de verdad central, no un silo.',
+  ns_p1:'Como <strong>Administrador de NetSuite</strong>, gestiono la configuración completa: roles y permisos, personalización de formularios, automatización con SuiteFlow y scripting con SuiteScript 2.x.',
+  ns_p2:'Mi enfoque diferenciador es usar <strong>NetSuite como el núcleo del ecosistema de datos</strong>: diseño integraciones bidireccionales usando la API REST/SOAP y herramientas como Celigo y Boomi.',
+  ns_p3:'Adicionalmente, extraigo datos de NetSuite hacia data warehouses (BigQuery, Snowflake) para análisis avanzado, combinando datos del ERP con otras fuentes para una vista 360° del negocio.',
+  nm1t:'Administración',nm1d:'Roles, permisos, subsidiarias, períodos contables y gestión de usuarios.',
+  nm2t:'Customización',nm2d:'Campos personalizados, formularios, listas, registros y layouts de transacciones.',
+  nm3t:'SuiteScript 2.x',nm3d:'User event, Suitelet, RESTlet, scripts de mapa/reducción para procesos masivos.',
+  nm4t:'SuiteFlow',nm4d:'Automatización de aprobaciones, notificaciones y flujos entre módulos.',
+  nm5t:'Integraciones',nm5d:'REST/SOAP API, Celigo, Boomi. Conexión con Shopify, Salesforce, WMS y más.',
+  nm6t:'SuiteAnalytics',nm6d:'Saved searches, reportes financieros, workbooks y dashboards de KPIs en tiempo real.',
+  ar_num:'03 — ARQUITECTURA',ar_h2:'Ecosistema de datos<br><em>centralizado</em>',
+  ar_desc:'Desde las fuentes heterogéneas — con NetSuite como núcleo — hasta la inteligencia accionable.',
+  al1t:'FUENTES',al2t:'INGESTA & ETL',al3t:'ALMACÉN CENTRAL',al4t:'ANALÍTICA',al5t:'CONSUMO',
+  pj_num:'04 — PROYECTOS',pj_h2:'Casos de <em>impacto</em><br>documentados',pj_desc:'Proyectos reales donde la integración y centralización generó valor medible.',
+  p1t:'NetSuite como hub central · Empresa de distribución',p1d:'Integración bidireccional entre NetSuite y 8 sistemas satélite. NetSuite como fuente de verdad para finanzas, inventario y órdenes. Pipeline hacia BigQuery para análisis avanzado con dbt.',p1i:'↑ 8 sistemas · 40h/mes ahorradas · 98.7% uptime',
+  p2t:'Dashboard financiero multi-subsidiaria',p2d:'Extracción de datos de NetSuite (6 subsidiarias) hacia Snowflake. Modelo dimensional para EBITDA, flujo de caja y márgenes consolidados en Power BI.',p2i:'↑ 6 subsidiarias · Tiempo real',
+  p3t:'Integración Shopify ↔ NetSuite',p3d:'Flujo automatizado de órdenes, inventario y fulfillment entre Shopify y NetSuite vía Celigo. Eliminación de doble captura y errores de stock.',p3i:'↑ 0 entrada manual · Errores −94%',
+  p4t:'Automatización de aprobaciones y ML',p4d:'SuiteFlow para aprobaciones de PO en NetSuite. Pipeline de datos hacia feature store en BigQuery para modelo de predicción de demanda.',p4i:'↑ Precisión +31% · Aprobaciones automáticas',
+  p5t:'Monitoreo operativo en tiempo real',p5d:'Pipeline streaming desde sensores IoT con detección de anomalías estadísticas y alertas automáticas para reducir downtime industrial.',p5i:'↑ Downtime −67%',
+  see_d:'Ver detalle →',
+  st_num:'05 — TECNOLOGÍAS',st_h2:'Stack técnico <em>completo</em>',st_desc:'Herramientas en producción, organizadas por capa del ecosistema de datos.',
+  sc1:'ERP & Integración',sc2:'Almacenamiento & ETL',sc3:'Análisis & BI',sc4:'Dev & Cloud',
+  pr_num:'06 — METODOLOGÍA',pr_h2:'Cómo trabajo un <em>proyecto</em>',pr_desc:'Un proceso estructurado para ecosistemas de datos escalables, mantenibles y alineados con el negocio.',
+  st1t:'Descubrimiento',st1d:'Mapeamos fuentes, stakeholders y casos de uso prioritarios del negocio.',
+  st2t:'Auditoría de datos',st2d:'Evaluamos calidad, completitud e identificamos gaps de gobierno.',
+  st3t:'Diseño de arquitectura',st3d:'Definimos el modelo, capas del pipeline y estrategia de integración.',
+  st4t:'Desarrollo iterativo',st4d:'Construimos pipelines, modelos dbt y conectores en sprints de 2 semanas.',
+  st5t:'Testing & QA',st5d:'Validamos integridad, volúmenes, freshness y exactitud de métricas.',
+  st6t:'Entrega & habilitación',st6d:'Documentamos, formamos a los equipos y establecemos monitoreo continuo.',
+  co_num:'07 — CONTACTO',co_cta:'¿Datos en silos? Construyamos tu <em>ecosistema unificado.</em>',co_sub:'Cuéntame el desafío de integración que enfrentas y exploramos cómo abordarlo.',co_cv:'↓ Descargar CV',
+  ft_r:'Portafolio · Google Sites',
+  mb_p1:'<p>Una empresa de distribución dependía de NetSuite para finanzas e inventario, pero tenía 8 sistemas satélite desconectados: WMS externo, e-commerce, sistema de transportistas, CRM, planillas de RRHH y herramientas de proveedores.</p><p>Diseñé una arquitectura donde NetSuite actúa como el hub central: todos los movimientos de inventario, órdenes y transacciones fluyen a través de él vía RESTlets y Celigo. Los datos se replican hacia BigQuery donde modelos dbt generan las capas analíticas.</p><p>Resultado: 40 horas mensuales de trabajo manual eliminadas, visibilidad de inventario en tiempo real en todos los canales, y reportes ejecutivos automatizados que antes tardaban días.</p>',
+  mb_p2:'<p>Un grupo con 6 subsidiarias en 3 países manejaba sus finanzas con una instancia NetSuite por subsidiaria, sin consolidación automática. Los cierres mensuales tomaban 2 días y requerían exportaciones manuales a Excel.</p><p>Implementé un pipeline que extrae datos financieros de las 6 instancias NetSuite vía SuiteScript RESTlet hacia Snowflake. Un modelo dimensional en dbt estandariza monedas y planes de cuentas, calculando EBITDA consolidado, flujo de caja y márgenes por entidad.</p><p>Los cierres mensuales ahora se generan automáticamente en 15 minutos con eliminaciones intercompany correctas.</p>',
+  mb_p3:'<p>Un retailer con Shopify y NetSuite operaba con doble captura manual: cada orden se ingresaba en NetSuite, el inventario se ajustaba a mano y los fulfillments se marcaban en ambos sistemas por separado.</p><p>Implementé una integración con Celigo que sincroniza órdenes Shopify → NetSuite en tiempo real, actualiza el inventario disponible NetSuite → Shopify con cada movimiento de almacén, y propaga el estado de fulfillment con número de rastreo de vuelta a Shopify.</p><p>Resultado: cero entrada manual, errores de stock reducidos en 94%, y el equipo pasó de procesar órdenes a supervisar excepciones.</p>',
+  mb_p4:'<p>El equipo de compras procesaba 200+ POs mensuales con aprobaciones por correo: lento, sin trazabilidad y propenso a errores. El equipo de supply chain quería predicción de demanda pero carecía de datos estructurados.</p><p>Configuré SuiteFlow en NetSuite para automatizar aprobaciones de PO por monto, categoría y subsidiaria, con escalaciones automáticas. Construí un pipeline que extrae datos históricos de NetSuite hacia un feature store en BigQuery.</p><p>El modelo de predicción de demanda mejoró la precisión en 31% y redujo el exceso de inventario en 18%.</p>',
+  mb_p5:'<p>Una planta industrial con 200 sensores IoT generaba datos sin análisis en tiempo real. Las fallas se detectaban solo después de paradas costosas.</p><p>Implementé un pipeline streaming con Apache Kafka que procesa eventos con ventanas temporales y detecta anomalías estadísticas (3-sigma). Las alertas disparan automáticamente a operadores via SMS/correo cuando un sensor supera umbrales de alerta temprana.</p><p>Datos históricos en BigQuery para mantenimiento predictivo. Downtime no planificado redujo 67% en los primeros 6 meses.</p>',
+},
+en:{
+  ctrl_av:'Available for projects',t_light:'Light',t_dark:'Dark',
+  n_about:'About',n_arch:'Architecture',n_proj:'Projects',n_stack:'Stack',n_con:'Contact',
+  h_tag:'Available for new projects',
+  h_h1:'Connected data,<br><em>intelligent</em> decisions',
+  h_desc:'Specialist in systems integration, NetSuite administration, and centralized data architecture. I connect heterogeneous sources into a unified analytics ecosystem.',
+  h_cta1:'View projects →',h_cta2:'Contact me',
+  s1l:'Completed projects',s1s:'Systems integration',s2l:'Years with NetSuite',s2s:'Certified admin',s3l:'Pipeline uptime',s4l:'Reporting speed',s4s:'vs manual processes',
+  ab_num:'01 — ABOUT ME',ab_h2:'Connected data,<br><em>real value</em>',
+  ab_desc:'I specialize in eliminating data silos and building analytical infrastructures that enable evidence-based decisions.',
+  ab_p1:'I am a <strong>Data Analyst and NetSuite Administrator</strong> focused on <strong>systems integration and data centralization</strong>. My work covers the full cycle: from ERP configuration to executive dashboards.',
+  ab_p2:'I have worked with finance, operations, logistics, and sales teams to identify sources of truth, connect them in centralized platforms, and automate flows that previously required manual work. NetSuite is usually the core of the ecosystem I build.',
+  ab_p3:'My differentiator is understanding both the business and the technical infrastructure — being the <strong>bridge between data teams and stakeholders</strong>.',
+  sk_lbl:'Technical competencies',
+  sk1:'NetSuite Admin & Customization',sk2:'Data Engineering & ETL',sk3:'Advanced SQL & Modeling',sk4:'REST API Integration',sk5:'Python · dbt · Airflow',sk6:'BI · Power BI · Looker',sk7:'Cloud · BigQuery · Snowflake',
+  ns_num:'02 — NETSUITE',ns_h2:'NetSuite as the<br><em>ecosystem core</em>',
+  ns_desc:'I administer, customize, and integrate NetSuite with the data ecosystem so the ERP becomes the central source of truth, not a silo.',
+  ns_p1:'As a <strong>NetSuite Administrator</strong>, I manage the full configuration: roles and permissions, form and record customization, SuiteFlow workflow automation, and SuiteScript 2.x scripting to extend native capabilities.',
+  ns_p2:'My differentiating approach is using <strong>NetSuite as the data ecosystem core</strong>: I design bidirectional integrations with other systems (CRM, e-commerce, WMS) using the REST/SOAP API and tools like Celigo and Boomi.',
+  ns_p3:'I also extract NetSuite data to data warehouses (BigQuery, Snowflake) for advanced analytics beyond SuiteAnalytics, combining ERP data with other sources for a 360° business view.',
+  nm1t:'Administration',nm1d:'Roles, permissions, subsidiaries, accounting periods and user management.',
+  nm2t:'Customization',nm2d:'Custom fields, forms, lists, records and transaction layouts.',
+  nm3t:'SuiteScript 2.x',nm3d:'User event, Suitelet, RESTlet, map/reduce scripts for mass processing.',
+  nm4t:'SuiteFlow',nm4d:'Approval automation, notifications and cross-module workflows.',
+  nm5t:'Integrations',nm5d:'REST/SOAP API, Celigo, Boomi. Connection with Shopify, Salesforce, WMS and more.',
+  nm6t:'SuiteAnalytics',nm6d:'Saved searches, financial reports, workbooks and real-time KPI dashboards.',
+  ar_num:'03 — ARCHITECTURE',ar_h2:'Centralized<br><em>data ecosystem</em>',
+  ar_desc:'From heterogeneous sources — with NetSuite as the core — to actionable intelligence.',
+  al1t:'SOURCES',al2t:'INGESTION & ETL',al3t:'CENTRAL WAREHOUSE',al4t:'ANALYTICS',al5t:'CONSUMPTION',
+  pj_num:'04 — PROJECTS',pj_h2:'Documented <em>impact</em><br>case studies',pj_desc:'Real projects where integration and centralization generated measurable business value.',
+  p1t:'NetSuite as central hub · Distribution company',p1d:'Bidirectional integration between NetSuite and 8 satellite systems. NetSuite as source of truth for finance, inventory, and orders. Pipeline to BigQuery for advanced analytics with dbt.',p1i:'↑ 8 systems · 40h/mo saved · 98.7% uptime',
+  p2t:'Multi-subsidiary financial dashboard',p2d:'NetSuite data extraction (6 subsidiaries) to Snowflake. Dimensional model for EBITDA, cash flow and consolidated margins in Power BI.',p2i:'↑ 6 subsidiaries · Real-time',
+  p3t:'Shopify ↔ NetSuite Integration',p3d:'Automated order, inventory, and fulfillment flow between Shopify and NetSuite via Celigo. Eliminated double-entry and stock errors.',p3i:'↑ 0 manual entry · Errors −94%',
+  p4t:'Approval automation & ML',p4d:'SuiteFlow for PO approvals in NetSuite. Data pipeline to feature store in BigQuery for demand forecasting model with automatic retraining.',p4i:'↑ Accuracy +31% · Auto approvals',
+  p5t:'Real-time operational monitoring',p5d:'Streaming pipeline from IoT sensors with statistical anomaly detection and automatic alerts to reduce industrial downtime.',p5i:'↑ Downtime −67%',
+  see_d:'View detail →',
+  st_num:'05 — TECHNOLOGIES',st_h2:'Complete <em>tech stack</em>',st_desc:'Production tools, organized by ecosystem layer.',
+  sc1:'ERP & Integration',sc2:'Storage & ETL',sc3:'Analytics & BI',sc4:'Dev & Cloud',
+  pr_num:'06 — METHODOLOGY',pr_h2:'How I work a <em>project</em>',pr_desc:'A structured process for scalable, maintainable ecosystems aligned with the business.',
+  st1t:'Discovery',st1d:'We map data sources, stakeholders, and priority business use cases.',
+  st2t:'Data audit',st2d:'We assess quality, completeness and identify governance gaps.',
+  st3t:'Architecture design',st3d:'We define the data model, pipeline layers, and integration strategy.',
+  st4t:'Iterative development',st4d:'We build pipelines, dbt models and connectors in 2-week sprints.',
+  st5t:'Testing & QA',st5d:'We validate referential integrity, volumes, freshness and metric accuracy.',
+  st6t:'Delivery & enablement',st6d:'We document, train teams and set up continuous monitoring.',
+  co_num:'07 — CONTACT',co_cta:'Data in silos? Let\'s build your <em>unified ecosystem.</em>',co_sub:'Tell me the integration challenge you face and let\'s explore how to tackle it.',co_cv:'↓ Download CV',
+  ft_r:'Portfolio · Google Sites',
+  mb_p1:'<p>A distribution company relied on NetSuite for finance and inventory but had 8 disconnected satellite systems: external WMS, e-commerce platform, carrier system, CRM, HR spreadsheets, and vendor tools.</p><p>I designed an architecture where NetSuite acts as the central hub: all inventory movements, orders, and transactions flow through it via RESTlets and Celigo. Data is replicated to BigQuery where dbt models generate the analytical layers.</p><p>Result: 40 monthly hours of manual work eliminated, real-time inventory visibility across all channels, and automated executive reports that previously took days to prepare.</p>',
+  mb_p2:'<p>A group with 6 subsidiaries in 3 countries managed finances with one NetSuite instance per subsidiary and no automatic consolidation. Monthly closes took 2 days and required manual Excel exports.</p><p>I implemented a pipeline extracting financial data from all 6 NetSuite instances via SuiteScript RESTlet to Snowflake. A dbt dimensional model standardizes currencies and chart of accounts, automatically calculating consolidated EBITDA, cash flow, and margins per entity.</p><p>Monthly closes are now automatically generated in 15 minutes with correct intercompany eliminations.</p>',
+  mb_p3:'<p>A retailer with Shopify and NetSuite operated with manual double-entry: every order was entered in NetSuite, inventory adjusted by hand, and fulfillments marked in both systems separately.</p><p>I implemented a Celigo integration that syncs orders Shopify → NetSuite in real-time, updates available inventory NetSuite → Shopify with every warehouse movement, and propagates fulfillment status with tracking numbers back to Shopify.</p><p>Result: zero manual order entry, stock errors reduced by 94%, and the team moved from processing orders to supervising exceptions.</p>',
+  mb_p4:'<p>The purchasing team processed 200+ monthly POs with email approvals: slow, no traceability, and error-prone. The supply chain team wanted demand forecasting but lacked structured data.</p><p>I configured SuiteFlow in NetSuite to automate PO approvals by amount, category, and subsidiary, with automatic escalations. I also built a pipeline extracting historical data from NetSuite to a feature store in BigQuery.</p><p>The demand forecasting model improved accuracy by 31% and reduced excess inventory by 18%.</p>',
+  mb_p5:'<p>An industrial plant with 200 IoT sensors generated data with no real-time analysis. Failures were only detected after costly unplanned stoppages.</p><p>I implemented a Kafka streaming pipeline processing sensor events with time windows and detecting statistical anomalies (3-sigma). Alerts automatically fire to operators via SMS/email when sensors exceed early-warning thresholds.</p><p>Historical data in BigQuery for predictive maintenance. Unplanned downtime reduced 67% in the first 6 months.</p>',
+}};
+
+const MTAGS={p1:['tag-gold NetSuite','tag-green BigQuery','tag-blue dbt','tag-coral Celigo'],p2:['tag-gold NetSuite','tag-blue Snowflake','tag-green Power BI'],p3:['tag-coral Shopify','tag-gold NetSuite','tag-green Celigo'],p4:['tag-blue SuiteScript','tag-gold SuiteFlow','tag-green Python'],p5:['tag-green Streaming','tag-blue Kafka','tag-coral Alertas']};
+const MMET={
+  p1:[{n:'40h',es:'Ahorradas/mes',en:'Saved/month'},{n:'8',es:'Sistemas integrados',en:'Systems integrated'},{n:'98.7%',es:'Uptime pipeline',en:'Pipeline uptime'}],
+  p2:[{n:'6',es:'Subsidiarias',en:'Subsidiaries'},{n:'15min',es:'Latencia datos',en:'Data latency'},{n:'80%',es:'Menos reportes',en:'Less reporting'}],
+  p3:[{n:'0',es:'Entrada manual',en:'Manual entry'},{n:'−94%',es:'Errores de stock',en:'Stock errors'},{n:'100%',es:'Automatización',en:'Automation'}],
+  p4:[{n:'+31%',es:'Precisión modelo',en:'Model accuracy'},{n:'200+',es:'POs/mes auto',en:'POs/mo auto'},{n:'−18%',es:'Exceso inventario',en:'Excess inventory'}],
+  p5:[{n:'−67%',es:'Downtime',en:'Downtime'},{n:'200',es:'Sensores',en:'Sensors'},{n:'<30s',es:'Tiempo alerta',en:'Alert time'}],
+};
+
+let lang='es',theme='light';
+
+function setTheme(t){
+  theme=t;
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('btn-light').classList.toggle('active',t==='light');
+  document.getElementById('btn-dark').classList.toggle('active',t==='dark');
+}
+function setLang(l){
+  lang=l;
+  document.documentElement.setAttribute('data-lang',l);
+  document.documentElement.lang=l==='es'?'es':'en';
+  document.getElementById('btn-es').classList.toggle('active',l==='es');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  applyT();
+}
+function applyT(){
+  const d=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!==undefined)el.textContent=d[k];});
+  document.querySelectorAll('[data-i18n-h]').forEach(el=>{const k=el.getAttribute('data-i18n-h');if(d[k]!==undefined)el.innerHTML=d[k];});
+}
+function openModal(id){
+  const d=T[lang],m=MMET[id];
+  const tags=(MTAGS[id]||[]).map(t=>{const[c,...r]=t.split(' ');return`<span class="tag ${c}">${r.join(' ')}</span>`;}).join('');
+  const metrics=m.map(x=>`<div class="modal-metric"><div class="modal-metric-num">${x.n}</div><div class="modal-metric-label">${lang==='es'?x.es:x.en}</div></div>`).join('');
+  document.getElementById('modal-inner').innerHTML=`<div class="modal-tag project-tags">${tags}</div><h3>${d[id+'t']||''}</h3><div class="modal-metrics">${metrics}</div><div class="modal-body">${d['mb_'+id]||''}</div>`;
+  document.getElementById('modal').classList.add('open');
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});});
+applyT();
+</script>
+</body>
+</html>
